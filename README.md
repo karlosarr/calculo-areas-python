@@ -21,7 +21,7 @@ Desde esta carpeta, ejecuta:
 python -m unittest -v
 ```
 
-La salida debe indicar 26 pruebas exitosas.
+La salida debe indicar 28 pruebas exitosas.
 
 Para generar el reporte de cobertura localmente:
 

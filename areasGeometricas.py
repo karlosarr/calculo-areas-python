@@ -101,5 +101,5 @@ def main() -> None:
         print(f"El area del {nombre} es: {funcion(*dimensiones):.2f} cm^2")
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     main()

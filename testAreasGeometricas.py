@@ -13,6 +13,7 @@ from areasGeometricas import (
     areaRombo,
     areaTrapecio,
     areaTriangulo,
+    _solicitar_numero,
     main,
 )
 
@@ -35,6 +36,12 @@ class TestAreaTriangulo(unittest.TestCase):
     def testRechazaTipoIncorrecto(self):
         with self.assertRaises(TypeError):
             areaTriangulo("10", 4)
+
+    def testRechazaValoresNoFinitos(self):
+        for valor in (math.inf, math.nan):
+            with self.subTest(valor=valor):
+                with self.assertRaises(ValueError):
+                    areaTriangulo(valor, 4)
 
 
 class TestAreaCuadrado(unittest.TestCase):
@@ -158,6 +165,15 @@ class TestMenuPrincipal(unittest.TestCase):
         self.assertIn("Opcion no valida", salida.getvalue())
         self.assertIn("Programa finalizado", salida.getvalue())
 
+    @patch("builtins.input", side_effect=["no es un numero", "5"])
+    def testSolicitaNuevamenteSiEntradaInvalida(self, entradaSimulada):
+        salida = StringIO()
+        with redirect_stdout(salida):
+            resultado = _solicitar_numero("el radio")
 
-if __name__ == "__main__":
+        self.assertEqual(resultado, 5.0)
+        self.assertIn("Entrada no valida", salida.getvalue())
+
+
+if __name__ == "__main__":  # pragma: no cover
     unittest.main(verbosity=2)

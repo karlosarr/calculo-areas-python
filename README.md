@@ -1,4 +1,6 @@
 # Aplicacion de areas geometricas
+[![Quality gate status](https://sonarcloud.io/api/project_badges/measure?project=karlosarr_calculo-areas-python&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=karlosarr_calculo-areas-python)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=karlosarr_calculo-areas-python&metric=coverage)](https://sonarcloud.io/summary/new_code?id=karlosarr_calculo-areas-python)
 
 Proyecto en Python para demostrar la implementacion y prueba de funciones de calculo de areas. Incluye seis figuras:
 
@@ -21,45 +23,34 @@ python -m unittest -v
 
 La salida debe indicar 26 pruebas exitosas.
 
+Para generar el reporte de cobertura localmente:
+
+```bash
+python -m pip install coverage
+coverage run --branch -m unittest discover -s . -p "test*.py"
+coverage report
+coverage xml -o coverage.xml
+```
+
 ## Integracion continua
 
-El workflow de GitHub Actions en `.github/workflows/tests.yml` ejecuta las
-pruebas unitarias automaticamente con Python 3.12 en cada `push` y `pull request`.
+El workflow de GitHub Actions en `.github/workflows/ci.yml` ejecuta las
+pruebas unitarias, genera `coverage.xml`, valida una cobertura minima del 80%
+y envia el reporte a SonarCloud en cada `push` y `pull request`.
 
 ## Usar en Google Colab
 
-El notebook `areasGeometricasColab.ipynb` importa las funciones de
-`areasGeometricas.py`, muestra ejemplos y ejecuta el archivo de pruebas.
+El notebook `areasGeometricasColab.ipynb` contiene las funciones y las pruebas,
+por lo que puede ejecutarse directamente en Google Colab sin subir archivos.
 
-1. Sube `areasGeometricas.py` y `testAreasGeometricas.py` al entorno de Colab, o clona este proyecto.
-2. Ejecuta el notebook completo, o ejecuta en una celda:
-
-```python
-%run areasGeometricas.py
-```
-
-3. Prueba una funcion:
+1. Ejecuta el notebook completo.
+2. Prueba una funcion:
 
 ```python
 areaCirculo(5)
 ```
 
-4. Ejecuta las pruebas unitarias en otra celda:
-
-```python
-!python -m unittest -v testAreasGeometricas.py
-```
-
-Tambien puedes ejecutar las pruebas directamente desde una celda Python:
-
-```python
-import unittest
-from testAreasGeometricas import *
-
-resultado = unittest.TextTestRunner(verbosity=2).run(
-    unittest.defaultTestLoader.loadTestsFromModule(__import__("testAreasGeometricas"))
-)
-```
+3. Ejecuta la celda de pruebas unitarias.
 
 Las pruebas cubren casos tipicos, valores positivos cercanos a cero, cero,
 negativos y tipos de datos incorrectos. Tambien prueban la seleccion de figuras,
